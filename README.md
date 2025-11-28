@@ -1,9 +1,6 @@
 # 🎯 Smart Task Analyzer
 
 An intelligent task management system that automatically scores and prioritizes tasks based on multiple factors including urgency, importance, effort, and dependencies.
-
-**Developed for:** Singularium Software Development Intern Position  
-=======
  
 **Tech Stack:** Python, Django, Django REST Framework, JavaScript, HTML, CSS  
 **Development Time:** ~3 hours
@@ -601,20 +598,6 @@ All tests pass successfully.
 ## 📸 Screenshots
 
 ### Main Interface
-<<<<<<< HEAD
-![Main Interface](screenshots/main-interface.png)
-*Task input form with sorting strategy selection*
-
-### Analysis Results
-![Analysis Results](screenshots/analysis-results.png)
-*Prioritized tasks with scores and explanations*
-
-### Top 3 Recommendations
-![Recommendations](screenshots/recommendations.png)
-*Top 3 tasks to focus on today*
-
-*(Add screenshots after testing the application)*
-=======
 <img width="1919" height="869" alt="Screenshot 2025-11-28 104757" src="https://github.com/user-attachments/assets/0b7b478a-e506-4ab2-932f-608d99821d4c" />
 
 
@@ -624,7 +607,7 @@ All tests pass successfully.
 
 ### Top 3 Recommendations
 <img width="1918" height="869" alt="Screenshot 2025-11-28 104627" src="https://github.com/user-attachments/assets/35afe1de-5c5d-47dd-9045-b26da3f8c5e5" />
->>>>>>> e04bbf7e98dfcea5ab8656e011f4bfb10bda80bc
+
 
 ---
 
@@ -652,39 +635,20 @@ All tests pass successfully.
 ## 🤝 Contributing
 
 This project was created as part of a technical assessment. If you have suggestions or find bugs, feel free to open an issue.
-
-<<<<<<< HEAD
 ---
-
-## 📄 License
-
-This project was created for educational purposes as part of a technical assessment for Singularium's Software Development Intern position.
-
----
-=======
->>>>>>> e04bbf7e98dfcea5ab8656e011f4bfb10bda80bc
 
 ## 👤 Author
 
-**Your Name**  
-<<<<<<< HEAD
-- GitHub: [@yourusername](https://github.com/yourusername)
-- Email: your.email@example.com
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/yourprofile)
-=======
+**Shruti Adat**  
+
 - GitHub: https://github.com/Shrutiadat
 - Email: shrutiadat17@gmail.com
-- LinkedIn: https://linkedin.com/in/yourprofile](https://www.linkedin.com/in/shruti-adat/
->>>>>>> e04bbf7e98dfcea5ab8656e011f4bfb10bda80bc
-
----
+- LinkedIn: https://www.linkedin.com/in/shruti-adat/
+=======
+--
 
 ## 🙏 Acknowledgments
 
-<<<<<<< HEAD
-- Singularium for providing this engaging technical challenge
-=======
->>>>>>> e04bbf7e98dfcea5ab8656e011f4bfb10bda80bc
 - Django and DRF communities for excellent documentation
 - Behavioral psychology research on task completion and motivation
 - Project management methodologies (GTD, Critical Path Method) that informed the algorithm design
@@ -701,8 +665,7 @@ This project was created for educational purposes as part of a technical assessm
 
 **Thank you for reviewing my submission!** 🚀
 
-<<<<<<< HEAD
 I'm excited to discuss my approach, design decisions, and any potential improvements. This project demonstrates my ability to translate complex business requirements into working code while maintaining clean architecture and comprehensive testing.
 =======
-I'm excited to discuss my approach, design decisions, and any potential improvements. This project demonstrates my ability to translate complex business requirements into working code while maintaining clean architecture and comprehensive testing.
->>>>>>> e04bbf7e98dfcea5ab8656e011f4bfb10bda80bc
+
+
