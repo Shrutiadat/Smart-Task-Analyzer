@@ -1,7 +1,6 @@
 # 🎯 Smart Task Analyzer
 
 An intelligent task management system that automatically scores and prioritizes tasks based on multiple factors including urgency, importance, effort, and dependencies.
-<<<<<<< HEAD
 
 **Developed for:** Singularium Software Development Intern Position  
 =======
