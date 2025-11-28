@@ -1,8 +1,7 @@
 # 🎯 Smart Task Analyzer
 
 An intelligent task management system that automatically scores and prioritizes tasks based on multiple factors including urgency, importance, effort, and dependencies.
-
-**Developed for:** Singularium Software Development Intern Position  
+ 
 **Tech Stack:** Python, Django, Django REST Framework, JavaScript, HTML, CSS  
 **Development Time:** ~3 hours
 
@@ -599,18 +598,15 @@ All tests pass successfully.
 ## 📸 Screenshots
 
 ### Main Interface
-![Main Interface](screenshots/main-interface.png)
-*Task input form with sorting strategy selection*
+<img width="1919" height="869" alt="Screenshot 2025-11-28 104757" src="https://github.com/user-attachments/assets/0b7b478a-e506-4ab2-932f-608d99821d4c" />
+
 
 ### Analysis Results
-![Analysis Results](screenshots/analysis-results.png)
-*Prioritized tasks with scores and explanations*
+<img width="1919" height="860" alt="Screenshot 2025-11-28 104648" src="https://github.com/user-attachments/assets/5aeab508-4b43-4bbe-a17d-e12cda782586" />
+
 
 ### Top 3 Recommendations
-![Recommendations](screenshots/recommendations.png)
-*Top 3 tasks to focus on today*
-
-*(Add screenshots after testing the application)*
+<img width="1918" height="869" alt="Screenshot 2025-11-28 104627" src="https://github.com/user-attachments/assets/35afe1de-5c5d-47dd-9045-b26da3f8c5e5" />
 
 ---
 
@@ -639,26 +635,18 @@ All tests pass successfully.
 
 This project was created as part of a technical assessment. If you have suggestions or find bugs, feel free to open an issue.
 
----
-
-## 📄 License
-
-This project was created for educational purposes as part of a technical assessment for Singularium's Software Development Intern position.
-
----
 
 ## 👤 Author
 
 **Your Name**  
-- GitHub: [@yourusername](https://github.com/yourusername)
-- Email: your.email@example.com
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/yourprofile)
+- GitHub: https://github.com/Shrutiadat
+- Email: shrutiadat17@gmail.com
+- LinkedIn: https://linkedin.com/in/yourprofile](https://www.linkedin.com/in/shruti-adat/
 
 ---
 
 ## 🙏 Acknowledgments
 
-- Singularium for providing this engaging technical challenge
 - Django and DRF communities for excellent documentation
 - Behavioral psychology research on task completion and motivation
 - Project management methodologies (GTD, Critical Path Method) that informed the algorithm design
