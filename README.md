@@ -6,7 +6,6 @@ An intelligent task management system that automatically scores and prioritizes 
 **Developed for:** Singularium Software Development Intern Position  
 =======
  
->>>>>>> e04bbf7e98dfcea5ab8656e011f4bfb10bda80bc
 **Tech Stack:** Python, Django, Django REST Framework, JavaScript, HTML, CSS  
 **Development Time:** ~3 hours
 
