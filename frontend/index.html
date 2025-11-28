@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Task Analyzer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .range-value {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-top: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.1s;
+        }
+
+        button:hover {
+            background: #5568d3;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .btn-success {
+            background: #28a745;
+            font-size: 1.3rem;
+            margin-top: 10px;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .divider {
+            border-top: 2px solid #e0e0e0;
+            margin: 30px 0;
+        }
+
+        .info-box {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+
+        .task-count {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .task-count strong {
+            color: #667eea;
+            font-size: 1.5rem;
+        }
+
+        .top-three {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .top-three h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .recommendation {
+            background: linear-gradient(135deg, #e8f5e9 0%, #e3f2fd 100%);
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .recommendation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 8px;
+        }
+
+        .recommendation-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .rank-badge {
+            background: #28a745;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .score-badge {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .recommendation-reason {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .results-section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .task-item {
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: box-shadow 0.3s;
+        }
+
+        .task-item:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+
+        .task-title-section {
+            flex: 1;
+        }
+
+        .task-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ccc;
+            margin-right: 15px;
+        }
+
+        .task-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .priority-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: white;
+            margin-left: 10px;
+        }
+
+        .priority-high {
+            background: #dc3545;
+        }
+
+        .priority-medium {
+            background: #ffc107;
+        }
+
+        .priority-low {
+            background: #28a745;
+        }
+
+        .task-explanation {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .task-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .detail-icon {
+            font-size: 1.2rem;
+        }
+
+        .score-breakdown {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+            font-size: 0.85rem;
+        }
+
+        .score-item {
+            text-align: center;
+        }
+
+        .score-label {
+            color: #888;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .score-value {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #667eea;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        .error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 968px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .task-details {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 Smart Task Analyzer</h1>
+            <p>Intelligent task prioritization based on multiple factors</p>
+        </header>
+
+        <div class="main-grid">
+            <!-- Left Panel: Add Tasks -->
+            <div class="card">
+                <h2>📝 Add Tasks</h2>
+                
+                <div class="form-group">
+                    <label>Task Title *</label>
+                    <input type="text" id="taskTitle" placeholder="e.g., Fix login bug">
+                </div>
+
+                <div class="form-group">
+                    <label>Due Date *</label>
+                    <input type="date" id="dueDate">
+                </div>
+
+                <div class="form-group">
+                    <label>Estimated Hours *</label>
+                    <input type="number" id="estimatedHours" placeholder="3" step="0.5" min="0.1">
+                </div>
+
+                <div class="form-group">
+                    <label>Importance (1-10)</label>
+                    <input type="range" id="importance" min="1" max="10" value="5">
+                    <div class="range-value" id="importanceValue">5</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Dependencies (comma-separated task IDs)</label>
+                    <input type="text" id="dependencies" placeholder="task_1, task_2">
+                </div>
+
+                <button onclick="addTask()">➕ Add Task</button>
+
+                <div class="divider"></div>
+
+                <h3 style="margin-bottom: 15px;">Or Add Bulk Tasks (JSON)</h3>
+                <div class="form-group">
+                    <textarea id="jsonInput" rows="6" placeholder='[{"title": "Task 1", "due_date": "2025-12-01", "estimated_hours": 2, "importance": 7}]'></textarea>
+                </div>
+                <button class="btn-secondary" onclick="addBulkTasks()">📦 Add JSON Tasks</button>
+
+                <div class="task-count">
+                    Tasks Added: <strong id="taskCount">0</strong>
+                </div>
+            </div>
+
+            <!-- Right Panel: Analysis Settings -->
+            <div class="card">
+                <h2>⚙️ Analysis Settings</h2>
+
+                <div class="form-group">
+                    <label>Sorting Strategy</label>
+                    <select id="strategy">
+                        <option value="smart_balance">🎯 Smart Balance (Recommended)</option>
+                        <option value="fastest_wins">⚡ Fastest Wins (Low Effort First)</option>
+                        <option value="high_impact">⭐ High Impact (Importance First)</option>
+                        <option value="deadline_driven">⏰ Deadline Driven (Urgency First)</option>
+                    </select>
+                </div>
+
+                <div class="info-box" id="strategyInfo">
+                    <strong>🎯 Smart Balance:</strong> Balanced weighting - 35% urgency, 30% importance, 15% effort, 20% dependencies
+                </div>
+
+                <button class="btn-success" onclick="analyzeTasks()" id="analyzeBtn">
+                    🚀 Analyze Tasks
+                </button>
+
+                <!-- Top 3 Recommendations -->
+                <div id="topThree" class="top-three hidden">
+                    <h3>🏆 Top 3 Recommended Tasks Today</h3>
+                    <div id="recommendationsContainer"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="resultsSection" class="results-section hidden">
+            <h2>📊 Prioritized Tasks</h2>
+            <div id="resultsContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const API_BASE_URL = 'http://127.0.0.1:8000/api/tasks';
+        let tasks = [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default date to tomorrow
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            document.getElementById('dueDate').valueAsDate = tomorrow;
+
+            // Update importance display
+            document.getElementById('importance').addEventListener('input', function(e) {
+                document.getElementById('importanceValue').textContent = e.target.value;
+            });
+
+            // Update strategy info
+            document.getElementById('strategy').addEventListener('change', updateStrategyInfo);
+        });
+
+        function updateStrategyInfo() {
+            const strategy = document.getElementById('strategy').value;
+            const infoBox = document.getElementById('strategyInfo');
+            
+            const strategies = {
+                'smart_balance': '<strong>🎯 Smart Balance:</strong> Balanced weighting - 35% urgency, 30% importance, 15% effort, 20% dependencies',
+                'fastest_wins': '<strong>⚡ Fastest Wins:</strong> Quick wins focus - 50% effort, 20% urgency, 20% importance, 10% dependencies',
+                'high_impact': '<strong>⭐ High Impact:</strong> Impact focus - 60% importance, 15% urgency, 10% effort, 15% dependencies',
+                'deadline_driven': '<strong>⏰ Deadline Driven:</strong> Deadline focus - 60% urgency, 20% importance, 10% effort, 10% dependencies'
+            };
+            
+            infoBox.innerHTML = strategies[strategy];
+        }
+
+        function addTask() {
+            const title = document.getElementById('taskTitle').value.trim();
+            const dueDate = document.getElementById('dueDate').value;
+            const hours = document.getElementById('estimatedHours').value;
+            const importance = document.getElementById('importance').value;
+            const deps = document.getElementById('dependencies').value;
+
+            if (!title || !dueDate || !hours) {
+                alert('Please fill in all required fields (Title, Due Date, Hours)!');
+                return;
+            }
+
+            const task = {
+                id: `task_${Date.now()}`,
+                title: title,
+                due_date: dueDate,
+                estimated_hours: parseFloat(hours),
+                importance: parseInt(importance),
+                dependencies: deps ? deps.split(',').map(d => d.trim()) : []
+            };
+
+            tasks.push(task);
+            updateTaskCount();
+            clearForm();
+            alert('✅ Task added successfully!');
+        }
+
+        function addBulkTasks() {
+            const jsonInput = document.getElementById('jsonInput').value.trim();
+            
+            if (!jsonInput) {
+                alert('Please enter JSON data!');
+                return;
+            }
+
+            try {
+                const parsed = JSON.parse(jsonInput);
+                const tasksArray = Array.isArray(parsed) ? parsed : [parsed];
+                
+                tasksArray.forEach((task, idx) => {
+                    tasks.push({
+                        id: task.id || `task_${Date.now()}_${idx}`,
+                        title: task.title || 'Untitled Task',
+                        due_date: task.due_date || new Date().toISOString().split('T')[0],
+                        estimated_hours: task.estimated_hours || 1,
+                        importance: task.importance || 5,
+                        dependencies: task.dependencies || []
+                    });
+                });
+                
+                updateTaskCount();
+                document.getElementById('jsonInput').value = '';
+                alert(`✅ Added ${tasksArray.length} task(s) successfully!`);
+            } catch (error) {
+                alert('❌ Invalid JSON format. Please check your input.');
+            }
+        }
+
+        function clearForm() {
+            document.getElementById('taskTitle').value = '';
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            document.getElementById('dueDate').valueAsDate = tomorrow;
+            document.getElementById('estimatedHours').value = '';
+            document.getElementById('importance').value = 5;
+            document.getElementById('importanceValue').textContent = 5;
+            document.getElementById('dependencies').value = '';
+        }
+
+        function updateTaskCount() {
+            document.getElementById('taskCount').textContent = tasks.length;
+        }
+
+        async function analyzeTasks() {
+            if (tasks.length === 0) {
+                alert('Please add some tasks first!');
+                return;
+            }
+
+            const strategy = document.getElementById('strategy').value;
+            const analyzeBtn = document.getElementById('analyzeBtn');
+            
+            analyzeBtn.disabled = true;
+            analyzeBtn.textContent = '⏳ Analyzing...';
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/analyze/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        tasks: tasks,
+                        strategy: strategy
+                    })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Analysis failed');
+                }
+
+                const data = await response.json();
+                displayResults(data.tasks);
+                displayTopThree(data.tasks.slice(0, 3));
+
+            } catch (error) {
+                alert(`❌ Error: ${error.message}`);
+                console.error('Analysis error:', error);
+            } finally {
+                analyzeBtn.disabled = false;
+                analyzeBtn.textContent = '🚀 Analyze Tasks';
+            }
+        }
+
+        function displayTopThree(topTasks) {
+            const container = document.getElementById('recommendationsContainer');
+            const section = document.getElementById('topThree');
+            
+            if (topTasks.length === 0) {
+                section.classList.add('hidden');
+                return;
+            }
+
+            section.classList.remove('hidden');
+            container.innerHTML = '';
+
+            topTasks.forEach((task, idx) => {
+                const div = document.createElement('div');
+                div.className = 'recommendation';
+                div.innerHTML = `
+                    <div class="recommendation-header">
+                        <div class="recommendation-title">
+                            <div class="rank-badge">${idx + 1}</div>
+                            <strong>${task.title}</strong>
+                        </div>
+                        <div class="score-badge">${task.score.total}</div>
+                    </div>
+                    <div class="recommendation-reason">${task.score.explanation}</div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function displayResults(analyzedTasks) {
+            const section = document.getElementById('resultsSection');
+            const container = document.getElementById('resultsContainer');
+            
+            section.classList.remove('hidden');
+            container.innerHTML = '';
+
+            analyzedTasks.forEach((task, idx) => {
+                const priority = getPriorityLevel(task.score.total);
+                
+                const div = document.createElement('div');
+                div.className = 'task-item';
+                div.innerHTML = `
+                    <div class="task-header">
+                        <div class="task-title-section">
+                            <div style="display: flex; align-items: center;">
+                                <span class="task-number">#${idx + 1}</span>
+                                <div>
+                                    <div class="task-title">
+                                        ${task.title}
+                                        <span class="priority-badge priority-${priority.class}">${priority.label}</span>
+                                    </div>
+                                    <div class="task-explanation">${task.score.explanation}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="score-badge">${task.score.total}</div>
+                    </div>
+
+                    <div class="task-details">
+                        <div class="detail-item">
+                            <span class="detail-icon">📅</span>
+                            <span>Due: ${task.due_date}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">⏱️</span>
+                            <span>${task.estimated_hours}h effort</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">⭐</span>
+                            <span>Importance: ${task.importance}/10</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">🔗</span>
+                            <span>${task.dependencies.length} dependencies</span>
+                        </div>
+                    </div>
+
+                    <div class="score-breakdown">
+                        <div class="score-item">
+                            <span class="score-label">Urgency</span>
+                            <span class="score-value">${task.score.breakdown.urgency}</span>
+                        </div>
+                        <div class="score-item">
+                            <span class="score-label">Importance</span>
+                            <span class="score-value">${task.score.breakdown.importance}</span>
+                        </div>
+                        <div class="score-item">
+                            <span class="score-label">Effort</span>
+                            <span class="score-value">${task.score.breakdown.effort}</span>
+                        </div>
+                        <div class="score-item">
+                            <span class="score-label">Dependencies</span>
+                            <span class="score-value">${task.score.breakdown.dependency}</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+
+            // Scroll to results
+            section.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function getPriorityLevel(score) {
+            if (score >= 80) return { label: 'High', class: 'high' };
+            if (score >= 60) return { label: 'Medium', class: 'medium' };
+            return { label: 'Low', class: 'low' };
+        }
+    </script>
+</body>
+</html>
